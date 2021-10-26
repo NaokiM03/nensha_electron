@@ -1,0 +1,19 @@
+{
+  "name": "nensha",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NaokiM03/nensha.git"
+  },
+  "author": "NaokiM03",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/NaokiM03/nensha/issues"
+  },
+  "homepage": "https://github.com/NaokiM03/nensha#readme"
+}
