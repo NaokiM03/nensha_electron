@@ -1,5 +1,9 @@
 <script></script>
 
-<p>Hello, svelte!</p>
+<img src="dummy_image.png" alt="" />
 
-<style></style>
+<style>
+  img {
+    -webkit-app-region: drag;
+  }
+</style>
