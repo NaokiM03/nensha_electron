@@ -1,6 +1,27 @@
-<script></script>
+<script>
+  const getImageFromClipboard = () => {
+    window.clipboard.getImage((image) => {
+      src = image.data;
+      window.resizeTo(image.width, image.height);
+    });
+  };
 
-<img src="dummy_image.png" alt="" />
+  const keydown = (e) => {
+    if (e.ctrlKey === true) {
+      switch (e.code) {
+        case "KeyV":
+          getImageFromClipboard();
+          break;
+      }
+    }
+  };
+
+  let src = "dummy_image.png";
+</script>
+
+<svelte:window on:keydown={keydown} />
+
+<img {src} alt="" />
 
 <style>
   img {
