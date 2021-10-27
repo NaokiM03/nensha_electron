@@ -46,8 +46,14 @@
     a.remove();
   };
 
+  const disableDragging = () => {
+    isInvisible = false;
+  };
+
   const keydown = (e) => {
     if (e.ctrlKey === true) {
+      disableDragging();
+
       switch (e.code) {
         case "KeyV":
           getImageFromClipboard();
@@ -62,15 +68,38 @@
     }
   };
 
+  const keyup = (e) => {
+    isInvisible = true;
+  };
+
   let src = "dummy_image.png";
+
+  let isInvisible = true;
 </script>
 
-<svelte:window on:keydown={keydown} />
+<svelte:window on:keydown={keydown} on:keyup={keyup} />
 
 <img {src} alt="" />
+<div class:isInvisible />
 
 <style>
+  :global(body) {
+    position: relative;
+  }
+
   img {
     -webkit-app-region: drag;
+  }
+
+  div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -webkit-app-region: no-drag;
+  }
+  .isInvisible {
+    display: none;
   }
 </style>
