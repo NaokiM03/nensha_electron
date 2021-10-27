@@ -85,8 +85,20 @@
     isInvisible = false;
   };
 
+  const increaseOpacity = () => {
+    if (opacity <= 0.1) return;
+    opacity = (opacity * 10 - 1) / 10;
+    window.win.setOpacity({ winId, opacity });
+  };
+
+  const decreaseOpacity = () => {
+    if (opacity >= 1.0) return;
+    opacity = (opacity * 10 + 1) / 10;
+    window.win.setOpacity({ winId, opacity });
+  };
+
   const keydown = (e) => {
-    if (e.ctrlKey === true) {
+    if (e.ctrlKey) {
       disableDragging();
 
       switch (e.code) {
@@ -107,12 +119,29 @@
     isInvisible = true;
   };
 
-  const wheel = (e) => {
-    const isPositive = Math.sign(e.wheelDelta) === +1;
+  const zoom = (isPositive) => {
     if (isPositive) {
       zoomIn();
     } else {
       zoomOut();
+    }
+  };
+
+  const setOpacity = (isPositive) => {
+    if (isPositive) {
+      decreaseOpacity();
+    } else {
+      increaseOpacity();
+    }
+  };
+
+  const wheel = (e) => {
+    const isPositive = Math.sign(e.wheelDelta) === +1;
+
+    if (e.altKey) {
+      setOpacity(isPositive);
+    } else {
+      zoom(isPositive);
     }
   };
 
@@ -132,6 +161,10 @@
   let a;
   let href = src;
   let download = getFileName() + ".png";
+
+  let opacity = 1.0;
+
+  let winId = Number(new URLSearchParams(location.search).get("win-id"));
 </script>
 
 <svelte:window on:keydown={keydown} on:keyup={keyup} on:wheel={wheel} />
