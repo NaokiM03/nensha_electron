@@ -72,14 +72,30 @@
     isInvisible = true;
   };
 
-  let src = "dummy_image.png";
 
   let isInvisible = true;
+
+  const imgLoaded = () => {
+    naturalWidth = img.naturalWidth;
+    naturalHeight = img.naturalHeight;
+  };
+
+  let img;
+  let src = "dummy_image.png";
+  let naturalWidth = 0;
+  let naturalHeight = 0;
 </script>
 
 <svelte:window on:keydown={keydown} on:keyup={keyup} />
 
-<img {src} alt="" />
+<img
+  bind:this={img}
+  {src}
+  {naturalWidth}
+  {naturalHeight}
+  alt=""
+  on:load={imgLoaded}
+/>
 <div class:isInvisible />
 
 <style>
