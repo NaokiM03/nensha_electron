@@ -1,6 +1,7 @@
 /** @type {import("snowpack").SnowpackUserConfig } */
 export default {
   mount: {
+    electron: { url: "/", static: true },
     public: { url: "/", static: true },
     scrap: { url: "/scrap" },
   },

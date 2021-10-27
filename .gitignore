@@ -1,4 +1,7 @@
 node_modules/
 
+# electron-builder
+dist/
+
 # snowpack + svelte
 build/
