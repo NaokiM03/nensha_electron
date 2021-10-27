@@ -10,6 +10,10 @@ html {
   cursor: default;
 }
 
+body {
+  overflow: hidden;
+}
+
 img {
   vertical-align: bottom;
   -webkit-user-drag: none;

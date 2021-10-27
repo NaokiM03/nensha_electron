@@ -46,6 +46,44 @@
     a.remove();
   };
 
+  const maxSize = 3840;
+  const minSize = 240;
+
+  const isOverMaxSize = () => {
+    const tmpScale = (scale * 10 + 1) / 10;
+    if (tmpScale <= 1.0) return false;
+    const tmpWidth = naturalWidth * tmpScale;
+    const tmpHeight = naturalHeight * tmpScale;
+    return tmpWidth > maxSize || tmpHeight > maxSize;
+  };
+
+  const isUnderMinSize = () => {
+    const tmpScale = (scale * 10 - 1) / 10;
+    if (tmpScale >= 1.0) return false;
+    const tmpWidth = naturalWidth * tmpScale;
+    const tmpHeight = naturalHeight * tmpScale;
+    return tmpWidth < minSize || tmpHeight < minSize;
+  };
+
+  const zoomIn = () => {
+    if (scale >= 2.0 || isOverMaxSize()) return;
+    scale = (scale * 10 + 1) / 10;
+    window.resizeTo(
+      Math.floor(naturalWidth * scale),
+      Math.floor(naturalHeight * scale)
+    );
+  };
+
+  const zoomOut = () => {
+    if (scale <= 0.5 || isUnderMinSize()) return;
+    console.log(scale);
+    scale = (scale * 10 - 1) / 10;
+    window.resizeTo(
+      Math.floor(naturalWidth * scale),
+      Math.floor(naturalHeight * scale)
+    );
+  };
+
   const disableDragging = () => {
     isInvisible = false;
   };
@@ -72,6 +110,14 @@
     isInvisible = true;
   };
 
+  const wheel = (e) => {
+    const isPositive = Math.sign(e.wheelDelta) === +1;
+    if (isPositive) {
+      zoomIn();
+    } else {
+      zoomOut();
+    }
+  };
 
   let isInvisible = true;
 
@@ -84,9 +130,10 @@
   let src = "dummy_image.png";
   let naturalWidth = 0;
   let naturalHeight = 0;
+  let scale = 1.0;
 </script>
 
-<svelte:window on:keydown={keydown} on:keyup={keyup} />
+<svelte:window on:keydown={keydown} on:keyup={keyup} on:wheel={wheel} />
 
 <img
   bind:this={img}
@@ -104,6 +151,8 @@
   }
 
   img {
+    width: 100%;
+    height: 100%;
     -webkit-app-region: drag;
   }
 
