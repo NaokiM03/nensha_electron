@@ -6,11 +6,18 @@
     });
   };
 
+  const setImageToClipboard = () => {
+    window.clipboard.setImage(src);
+  };
+
   const keydown = (e) => {
     if (e.ctrlKey === true) {
       switch (e.code) {
         case "KeyV":
           getImageFromClipboard();
+          break;
+        case "KeyC":
+          setImageToClipboard();
           break;
       }
     }

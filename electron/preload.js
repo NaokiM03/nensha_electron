@@ -1,4 +1,4 @@
-const { contextBridge, clipboard } = require("electron");
+const { contextBridge, clipboard, nativeImage } = require("electron");
 
 contextBridge.exposeInMainWorld("clipboard", {
   getImage: (callback) => {
@@ -14,5 +14,9 @@ contextBridge.exposeInMainWorld("clipboard", {
       width,
       height,
     });
+  },
+  setImage: (data) => {
+    const image = nativeImage.createFromDataURL(data);
+    clipboard.writeImage(image);
   },
 });
