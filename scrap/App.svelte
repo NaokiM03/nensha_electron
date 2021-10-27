@@ -1,4 +1,12 @@
 <script context="module">
+  const getDateAsYYYYMMDD = () => {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = ("00" + (date.getMonth() + 1).toString()).slice(-2);
+    const day = ("00" + date.getDate().toString()).slice(-2);
+    return `${year}-${month}-${day}`;
+  };
+
   const alphanumeric_chars =
     "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
@@ -13,7 +21,7 @@
   };
 
   const getFileName = () => {
-    return `${createAlphanumeric()}`;
+    return `${getDateAsYYYYMMDD()}-${createAlphanumeric()}`;
   };
 </script>
 
