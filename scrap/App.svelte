@@ -1,3 +1,22 @@
+<script context="module">
+  const alphanumeric_chars =
+    "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
+  const createAlphanumeric = () => {
+    let randomString = "";
+    for (let i = 0; i < 10; i++) {
+      randomString += alphanumeric_chars.charAt(
+        Math.floor(Math.random() * alphanumeric_chars.length)
+      );
+    }
+    return randomString;
+  };
+
+  const getFileName = () => {
+    return `${createAlphanumeric()}`;
+  };
+</script>
+
 <script>
   const getImageFromClipboard = () => {
     window.clipboard.getImage((image) => {
@@ -13,7 +32,7 @@
   const saveImage = () => {
     const a = document.createElement("a");
     a.href = src;
-    a.download = "image.png";
+    a.download = getFileName() + ".png";
     document.body.appendChild(a);
     a.click();
     a.remove();
