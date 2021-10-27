@@ -1,4 +1,9 @@
-const { contextBridge, clipboard, nativeImage } = require("electron");
+const {
+  contextBridge,
+  clipboard,
+  nativeImage,
+  ipcRenderer,
+} = require("electron");
 
 contextBridge.exposeInMainWorld("clipboard", {
   getImage: (callback) => {
@@ -18,5 +23,11 @@ contextBridge.exposeInMainWorld("clipboard", {
   setImage: (data) => {
     const image = nativeImage.createFromDataURL(data);
     clipboard.writeImage(image);
+  },
+});
+
+contextBridge.exposeInMainWorld("win", {
+  setOpacity: ({ winId, opacity }) => {
+    ipcRenderer.invoke("set-opacity", { winId, opacity });
   },
 });

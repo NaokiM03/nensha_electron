@@ -1,7 +1,9 @@
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 
 const isDev = process.env.NODE_ENV === "development";
+
+const windows = new Map();
 
 const createScrapWindow = () => {
   const scrapWindow = new BrowserWindow({
@@ -17,14 +19,20 @@ const createScrapWindow = () => {
     },
   });
   if (isDev) {
-    scrapWindow.loadURL("http://localhost:8080/scrap.html");
+    scrapWindow.loadURL(
+      `http://localhost:8080/scrap.html?win-id=${scrapWindow.id}`
+    );
   } else {
-    scrapWindow.loadFile(path.join(__dirname, "scrap.html"));
+    scrapWindow.loadFile(
+      path.join(__dirname, `scrap.html?win-id=${scrapWindow.id}`)
+    );
   }
 
   if (isDev) {
     scrapWindow.webContents.openDevTools();
   }
+
+  windows.set(scrapWindow.id, scrapWindow);
 };
 
 app.whenReady().then(() => {
@@ -38,4 +46,9 @@ app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
   }
+});
+
+ipcMain.handle("set-opacity", (_, { winId, opacity }) => {
+  const win = windows.get(winId);
+  win.setOpacity(opacity);
 });
