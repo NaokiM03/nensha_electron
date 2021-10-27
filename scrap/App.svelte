@@ -10,6 +10,15 @@
     window.clipboard.setImage(src);
   };
 
+  const saveImage = () => {
+    const a = document.createElement("a");
+    a.href = src;
+    a.download = "image.png";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  };
+
   const keydown = (e) => {
     if (e.ctrlKey === true) {
       switch (e.code) {
@@ -18,6 +27,9 @@
           break;
         case "KeyC":
           setImageToClipboard();
+          break;
+        case "KeyS":
+          saveImage();
           break;
       }
     }
