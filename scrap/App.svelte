@@ -38,12 +38,9 @@
   };
 
   const saveImage = () => {
-    const a = document.createElement("a");
-    a.href = src;
-    a.download = getFileName() + ".png";
-    document.body.appendChild(a);
+    href = src;
+    download = getFileName() + ".png";
     a.click();
-    a.remove();
   };
 
   const maxSize = 3840;
@@ -131,6 +128,10 @@
   let naturalWidth = 0;
   let naturalHeight = 0;
   let scale = 1.0;
+
+  let a;
+  let href = src;
+  let download = getFileName() + ".png";
 </script>
 
 <svelte:window on:keydown={keydown} on:keyup={keyup} on:wheel={wheel} />
@@ -144,6 +145,9 @@
   on:load={imgLoaded}
 />
 <div class:isInvisible />
+
+<!-- svelte-ignore a11y-missing-content -->
+<a bind:this={a} {href} {download} />
 
 <style>
   :global(body) {
