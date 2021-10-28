@@ -37,6 +37,10 @@
     window.clipboard.setImage(src);
   };
 
+  const load = () => {
+    getImageFromClipboard();
+  };
+
   const saveImage = () => {
     href = src;
     download = getFileName() + ".png";
@@ -102,9 +106,6 @@
       disableDragging();
 
       switch (e.code) {
-        case "KeyV":
-          getImageFromClipboard();
-          break;
         case "KeyC":
           setImageToClipboard();
           break;
@@ -167,7 +168,12 @@
   let winId = Number(new URLSearchParams(location.search).get("win-id"));
 </script>
 
-<svelte:window on:keydown={keydown} on:keyup={keyup} on:wheel={wheel} />
+<svelte:window
+  on:load={load}
+  on:keydown={keydown}
+  on:keyup={keyup}
+  on:wheel={wheel}
+/>
 
 <img
   bind:this={img}
