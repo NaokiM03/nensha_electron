@@ -79,3 +79,7 @@ ipcMain.handle("set-opacity", (_, { winId, opacity }) => {
 process.on("exit", function () {
   unsetShortcut();
 });
+
+process.on("SIGINT", function () {
+  process.exit(0);
+});
