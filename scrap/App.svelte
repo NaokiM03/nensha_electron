@@ -102,6 +102,8 @@
   };
 
   const keydown = (e) => {
+    if (e.code === "Escape") window.close();
+
     if (e.ctrlKey) {
       disableDragging();
 
