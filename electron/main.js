@@ -29,15 +29,10 @@ const createScrapWindow = () => {
       preload: path.join(__dirname, "preload.js"),
     },
   });
-  if (isDev) {
-    scrapWindow.loadURL(
-      `http://localhost:8080/scrap.html?win-id=${scrapWindow.id}`
-    );
-  } else {
-    scrapWindow.loadFile(
-      path.join(__dirname, `scrap.html?win-id=${scrapWindow.id}`)
-    );
-  }
+  const url = isDev
+    ? `http://localhost:8080/scrap.html?win-id=${scrapWindow.id}`
+    : "file://" + __dirname + `/scrap.html?win-id=${scrapWindow.id}`;
+  scrapWindow.loadURL(url);
 
   if (isDev) {
     scrapWindow.webContents.openDevTools();
