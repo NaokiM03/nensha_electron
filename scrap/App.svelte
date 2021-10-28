@@ -77,7 +77,6 @@
 
   const zoomOut = () => {
     if (scale <= 0.5 || isUnderMinSize()) return;
-    console.log(scale);
     scale = (scale * 10 - 1) / 10;
     window.resizeTo(
       Math.floor(naturalWidth * scale),
