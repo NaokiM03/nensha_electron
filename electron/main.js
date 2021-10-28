@@ -1,9 +1,18 @@
-const { app, BrowserWindow, ipcMain } = require("electron");
+const {
+  app,
+  BrowserWindow,
+  ipcMain,
+  Tray,
+  Menu,
+} = require("electron");
 const path = require("path");
 
 const isDev = process.env.NODE_ENV === "development";
 
 const windows = new Map();
+
+// for GC
+let tray = null;
 
 const createScrapWindow = () => {
   const scrapWindow = new BrowserWindow({
@@ -35,8 +44,16 @@ const createScrapWindow = () => {
   windows.set(scrapWindow.id, scrapWindow);
 };
 
+const createTray = () => {
+  tray = new Tray(path.join(__dirname, "app.ico"));
+  const contextMenu = Menu.buildFromTemplate([{ label: "Quit", role: "quit" }]);
+  tray.setToolTip("nensha");
+  tray.setContextMenu(contextMenu);
+};
+
 app.whenReady().then(() => {
   createScrapWindow();
+  createTray();
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common
